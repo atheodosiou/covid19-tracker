@@ -8,9 +8,16 @@ import * as L from "leaflet";
 export class MapComponent implements OnInit {
   constructor() {}
   map: L.Map;
-
+  center:L.LatLng=new L.LatLng(37.2532002, 5.8725402);
   ngOnInit() {
     this.initMap();
+    this.getCurrentPosition().then(pos=>{
+      console.log(pos)
+      this.map.flyTo({lat:pos.coords.latitude,lng:pos.coords.longitude},12);
+    }).catch(error=>{
+      console.error(error);
+      this.map.setView(this.center,3);
+    });
   }
 
   private initMap() {
@@ -32,7 +39,7 @@ export class MapComponent implements OnInit {
       }
     );
     this.map = L.map("map", {
-      center: [37.2532002, 5.8725402],
+      center: this.center,
       zoom: 3,
       layers: [Stadia_AlidadeSmoothDark,OpenStreetMap_DE],
     });
@@ -43,5 +50,19 @@ export class MapComponent implements OnInit {
     };
 
     L.control.layers(layers).addTo(this.map);
+  }
+
+  private getCurrentPosition():Promise<any>{
+    return new Promise<any>((fullfiled,rejected)=>{
+      if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(success=>{
+          fullfiled(success);
+        },fail=>{
+          rejected(fail);
+        });
+      }else{
+        rejected('Geolocation is not supported by this browser.');
+      }
+    });
   }
 }
