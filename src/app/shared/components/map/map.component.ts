@@ -1,26 +1,35 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import * as L from "leaflet";
+import { CovidService } from '../../services/covid.service';
+
 @Component({
   selector: "map",
   templateUrl: "./map.component.html",
   styleUrls: ["./map.component.scss"],
 })
 export class MapComponent implements OnInit {
-  constructor() {}
-  map: L.Map;
-  center:L.LatLng=new L.LatLng(37.2532002, 5.8725402);
-  ngOnInit() {
-    this.initMap();
-    this.getCurrentPosition().then(pos=>{
-      console.log(pos)
-      this.map.flyTo({lat:pos.coords.latitude,lng:pos.coords.longitude},12);
-    }).catch(error=>{
-      console.error(error);
-      this.map.setView(this.center,3);
-    });
+  @Input() set data(value:any[]){
+   if(value){
+    this.mapData=value;
+    // console.log(this.mapData)
+   }
   }
 
-  private initMap() {
+  constructor(private covidService:CovidService) {}
+  map: L.Map;
+  private mapData:any[];
+  center: L.LatLng = new L.LatLng(37.2532002, 5.8725402);
+  ngOnInit() {
+    setTimeout(() => {
+      this.initMap().then(() => {
+        //Use lowdash to groupby country!!!
+        console.log(this.mapData)
+        // lat and lng could be null!!
+      });
+    }, 100);
+  }
+
+  private initMap(): Promise<any> {
     const Stadia_AlidadeSmoothDark = L.tileLayer(
       "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png",
       {
@@ -38,31 +47,50 @@ export class MapComponent implements OnInit {
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }
     );
-    this.map = L.map("map", {
-      center: this.center,
-      zoom: 3,
-      layers: [Stadia_AlidadeSmoothDark,OpenStreetMap_DE],
-    });
-
-    const layers={
-      "Light":OpenStreetMap_DE,
-      "Dark":Stadia_AlidadeSmoothDark
+    const layers = {
+      Light: OpenStreetMap_DE,
+      Dark: Stadia_AlidadeSmoothDark,
     };
-
-    L.control.layers(layers).addTo(this.map);
+    return new Promise<any>((fullfiled, rejected) => {
+      this.map = L.map("map", {
+        center: this.center,
+        zoom: 3,
+        layers: [Stadia_AlidadeSmoothDark, OpenStreetMap_DE],
+      });
+      L.control.layers(layers).addTo(this.map);
+      fullfiled();
+    });
   }
 
-  private getCurrentPosition():Promise<any>{
-    return new Promise<any>((fullfiled,rejected)=>{
-      if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(success=>{
-          fullfiled(success);
-        },fail=>{
-          rejected(fail);
-        });
-      }else{
-        rejected('Geolocation is not supported by this browser.');
+  private getCurrentPosition(): Promise<any> {
+    return new Promise<any>((fullfiled, rejected) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (success) => {
+            fullfiled(success);
+          },
+          (fail) => {
+            // rejected(fail);
+            fullfiled(null)
+          }
+        );
+      } else {
+        rejected("Geolocation is not supported by this browser.");
       }
     });
+  }
+
+  private addGeolocationToData(data:any[],countries:any[]){
+    let found = 0;
+    data.forEach(item=>{
+      countries.forEach(c=>{
+        if(c.country.toUpperCase().subStr(item.country.toUpperCase())){
+          found+=1;
+         }else{
+           console.log(`${item.country.toUpperCase()} is not included in countries`);
+         }
+      })      
+    })
+    return found;
   }
 }

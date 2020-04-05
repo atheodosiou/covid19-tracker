@@ -6,14 +6,6 @@ import { CovidService } from './shared/services/covid.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent{
   title = 'covid19';
-  constructor(private covidService:CovidService){}
-  covidData:any[]=[];
-  ngOnInit(){
-    this.covidService.getData().subscribe(data=>{
-      
-      console.log(data);
-    },error=>{console.error(error)});
-  }
 }
