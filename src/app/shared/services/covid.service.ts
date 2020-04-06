@@ -10,9 +10,13 @@ export class CovidService {
   private covidDataUrl = "https://corona.lmao.ninja/v2/jhucsse";
   constructor(private http: HttpClient) {}
 
-  getData(): Observable<any> {
+  getGroupedData(): Observable<any> {
     return this.http.get(this.covidDataUrl).pipe(
       map(x=>_.groupBy(x,'country'))
     );
+  }
+
+  getData(): Observable<any> {
+    return this.http.get(this.covidDataUrl);
   }
 }

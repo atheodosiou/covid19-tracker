@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
 import * as L from "leaflet";
-import { CovidService } from '../../services/covid.service';
+import { CovidService } from "../../services/covid.service";
+import { GeoJson } from "../../models/geoJSON";
 
 @Component({
   selector: "map",
@@ -8,25 +9,26 @@ import { CovidService } from '../../services/covid.service';
   styleUrls: ["./map.component.scss"],
 })
 export class MapComponent implements OnInit {
-  @Input() set data(value:any[]){
-   if(value){
-    this.mapData=value;
-    // console.log(this.mapData)
-   }
+  @Input() set data(value: any[]) {
+    if (value) {
+      this.mapData = value;
+      console.log(this.mapData);
+      // console.log(this.toGeoJson(this.mapData));
+    }
   }
 
-  constructor(private covidService:CovidService) {}
+  constructor(private covidService: CovidService) {}
   map: L.Map;
-  private mapData:any[];
+  private mapData: any[];
   center: L.LatLng = new L.LatLng(37.2532002, 5.8725402);
   ngOnInit() {
     setTimeout(() => {
       this.initMap().then(() => {
         //Use lowdash to groupby country!!!
-        console.log(this.mapData)
+        console.log(this.mapData);
         // lat and lng could be null!!
       });
-    }, 100);
+    }, 300);
   }
 
   private initMap(): Promise<any> {
@@ -58,6 +60,12 @@ export class MapComponent implements OnInit {
         layers: [Stadia_AlidadeSmoothDark, OpenStreetMap_DE],
       });
       L.control.layers(layers).addTo(this.map);
+
+      this.mapData.forEach((item) => {
+        L.marker([item.coordinates.latitude, item.coordinates.longitude], {
+          icon: this.getIcon(item.stats.confirmed),
+        }).addTo(this.map);
+      });
       fullfiled();
     });
   }
@@ -71,7 +79,7 @@ export class MapComponent implements OnInit {
           },
           (fail) => {
             // rejected(fail);
-            fullfiled(null)
+            fullfiled(null);
           }
         );
       } else {
@@ -80,17 +88,61 @@ export class MapComponent implements OnInit {
     });
   }
 
-  private addGeolocationToData(data:any[],countries:any[]){
-    let found = 0;
-    data.forEach(item=>{
-      countries.forEach(c=>{
-        if(c.country.toUpperCase().subStr(item.country.toUpperCase())){
-          found+=1;
-         }else{
-           console.log(`${item.country.toUpperCase()} is not included in countries`);
-         }
-      })      
-    })
-    return found;
+  private toGeoJson(data: any[]): any[] {
+    return data.map((x) => {
+      return {
+        type: "Feature",
+        properties: {
+          country: x.country,
+          province: x.province,
+          stats: x.stats,
+          updatedAt: x.updatedAt,
+        },
+        geometry: {
+          type: "Point",
+          coordinates: [x.coordinates.latitude, x.coordinates.longitude],
+        },
+      };
+    });
+  }
+
+  private getIcon(value: number): L.Icon {
+    if (value <= 9) {
+      return L.icon({
+        iconUrl: "../../../../assets/icons/1.png",
+        iconSize: [8, 8],
+        iconAnchor: [0, 4],
+      });
+    } else if (value >= 10 && value <= 99) {
+      return L.icon({
+        iconUrl: "../../../../assets/icons/2.png",
+        iconSize: [10, 10],
+        iconAnchor: [0, 5],
+      });
+    } else if (value >= 10 && value <= 99) {
+      return L.icon({
+        iconUrl: "../../../../assets/icons/3.png",
+        iconSize: [12, 12],
+        iconAnchor: [0, 6],
+      });
+    } else if (value >= 100 && value <= 999) {
+      return L.icon({
+        iconUrl: "../../../../assets/icons/4.png",
+        iconSize: [14, 14],
+        iconAnchor: [0, 7],
+      });
+    } else if (value >= 1000 && value <= 9999) {
+      return L.icon({
+        iconUrl: "../../../../assets/icons/5.png",
+        iconSize: [16, 16],
+        iconAnchor: [0, 8],
+      });
+    } else if (value >= 10000) {
+      return L.icon({
+        iconUrl: "../../../../assets/icons/6.png",
+        iconSize: [18, 18],
+        iconAnchor: [0, 9],
+      });
+    }
   }
 }
