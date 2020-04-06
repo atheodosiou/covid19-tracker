@@ -1,157 +1,217 @@
 @import "../../../../assets/styles/variables";
 
 @mixin row {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 @mixin column {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
+@mixin scrollbar {
+    &::-webkit-scrollbar {
+        width: 1px
+      }
+
+      &::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: darkgrey;
+        outline: 1px solid slategrey;
+      }
+}
 .wrapper {
-    @include column();
-    background-color: $dark;
-    color: white;
-    .header {
-        @include row();
-        height: 50px;
-        align-items: center;
+  @include column();
+  background-color: $dark;
+  color: white;
+  .header {
+    @include row();
+    height: 50px;
+    align-items: center;
+    border-bottom: 1px solid whitesmoke;
+    padding: 0rem 1rem;
+    .title {
+      font-size: 1.5rem;
+      text-align: center;
+      width: 100%;
+    }
+  }
+
+  .body {
+    @include row();
+    justify-content: flex-start;
+    height: calc(100vh - 100px);
+    .left {
+      @include column();
+      align-items: center;
+      width: 250px;
+      border-right: 1px solid whitesmoke;
+      justify-content: flex-start;
+      .total {
+        @include column();
         border-bottom: 1px solid whitesmoke;
-        padding: 0rem 1rem;
-        .title{
-            font-size: 1.5rem;
-            text-align: center;
-            width: 100%;
-        }
-    }
+        width: 100%;
+        text-align: center;
+        align-items: center;
+        padding: 1rem;
 
-    .body {
-        @include row();
-        justify-content: flex-start;
-        height: calc(100vh - 100px);
-        .left {
-            @include column();
-            align-items: center;
-            width: 250px;
-            border-right:1px solid whitesmoke;
-            justify-content: flex-start;
-            .total{
-                @include column();
-                border-bottom: 1px solid whitesmoke;
-                width: 100%;
-                text-align: center;
-                align-items: center;
-                padding: 1rem;
-
-                &:last-child{
-                    border-top: 1px solid whitesmoke;
-                    border-bottom: none;
-                }
-                .text{
-                    font-size: 1.2rem;
-                }
-                .value{
-                    font-size: 2.5rem;
-                    font-weight: bold;
-                    padding: 0px;
-                }
-            
-            }
+        &:last-child {
+          border-top: 1px solid whitesmoke;
+          border-bottom: none;
         }
-        .center {
-            @include column();
-            flex:1;
-            
+        .text {
+          font-size: 1.2rem;
         }
-        .right {
-            @include column();
-            align-items: center;
-            width: 250px;
-            border-left:1px solid whitesmoke;
+        .value {
+          font-size: 2.5rem;
+          font-weight: bold;
+          padding: 0px;
         }
+      }
     }
-
-    .footer {
-        @include row();
-        height: 50px;
-        border-top:1px solid whitesmoke;
+    .center {
+      @include column();
+      flex: 1;
     }
+    .right {
+      @include column();
+      align-items: center;
+      width: 300px;
+      border-left: 1px solid whitesmoke;
+    }
+  }
+
+  .footer {
+    @include row();
+    height: 50px;
+    border-top: 1px solid whitesmoke;
+
+    .left {
+      display: flex;
+      align-items: center;
+      width: 250px;
+      word-wrap: break-word;
+      overflow-x: auto;
+      @include scrollbar();
+      .created-by {
+        width: 100%;
+        text-align: center;
+        color: whitesmoke;
+        a {
+          text-decoration: none;
+          color: whitesmoke;
+          font-weight: bold;
+          font-style: italic;
+
+          &:hover {
+            color: lightseagreen;
+          }
+        }
+      }
+    }
+    .center {
+      // background-color: red;
+      display: flex;
+      flex: 1;
+      .info {
+        overflow-y: auto;
+        word-wrap: break-word;
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+        @include scrollbar();
+        a{
+            color: lightseagreen;
+            text-decoration: none;
+        }
+        
+      }
+    }
+    .right {
+      width: 300px;
+      overflow-x: auto;
+      @include scrollbar();
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      
+      a{
+          text-decoration: none;
+          color: whitesmoke;
+          font-size: 1.2rem;
+
+          &:hover{
+              color: lightseagreen;
+              cursor: pointer;
+          }
+      }
+    }
+  }
 }
-
-
 
 /* Small devices (landscape phones, 576px and up) */
-@media (max-width: 576px) {  
- .wrapper{
-     .header{
-
-     }
-     .body{
-        .left{
-            display: none;
-        }
-        .center{
-
-        }
-        .right{
-            display: none;
-        }
-     }
-     .footer{
-
-     }
- }
+@media (max-width: 576px) {
+  .wrapper {
+    .header {
+    }
+    .body {
+      .left {
+        display: none;
+      }
+      .center {
+      }
+      .right {
+        display: none;
+      }
+    }
+    .footer {
+    }
+  }
 }
- 
+
 /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
-@media (max-width: 768px) {  
-    .wrapper{
-        .header{
-   
-        }
-        .body{
-           .left{
-               display: none;
-           }
-           .center{
-   
-           }
-           .right{
-               display: none;
-           }
-        }
-        .footer{
-   
-        }
+@media (max-width: 768px) {
+  .wrapper {
+    .header {
     }
+    .body {
+      .left {
+        display: none;
+      }
+      .center {
+      }
+      .right {
+        display: none;
+      }
+    }
+    .footer {
+    }
+  }
 }
- 
+
 /* Large devices (desktops, 992px and up) */
-@media (max-width: 992px) { 
-    .wrapper{
-        .header{
-            
-        }
-        .body{
-           .left{
-               display: none;
-           }
-           .center{
-   
-           }
-           .right{
-               display: none;
-           }
-        }
-        .footer{
-   
-        }
+@media (max-width: 992px) {
+  .wrapper {
+    .header {
     }
+    .body {
+      .left {
+        display: none;
+      }
+      .center {
+      }
+      .right {
+        display: none;
+      }
+    }
+    .footer {
+    }
+  }
 }
- 
+
 /* Extra large devices (large desktops, 1200px and up) */
-@media (max-width: 1200px) {  
-    
+@media (max-width: 1200px) {
 }
