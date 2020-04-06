@@ -1,0 +1,48 @@
+@import "../../../../assets/styles/variables";
+
+@mixin row {
+    display: flex;
+    flex-direction: row;
+}
+
+@mixin column {
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper {
+    @include column();
+    background-color: $dark;
+    color: white;
+    .header {
+        @include row();
+        height: 50px;
+        align-items: center;
+    }
+
+    .body {
+        @include row();
+        justify-content: flex-start;
+        height: calc(100vh - 100px);
+        .left {
+            @include column();
+            align-items: center;
+            width: 200px;
+            border:1px solid whitesmoke;
+        }
+        .center {
+            @include column();
+            flex:1;
+        }
+        .right {
+            @include column();
+            align-items: center;
+            width: 100px;
+        }
+    }
+
+    .footer {
+        @include row();
+        height: 50px;
+    }
+}
