@@ -18,6 +18,13 @@
         @include row();
         height: 50px;
         align-items: center;
+        border-bottom: 1px solid whitesmoke;
+        padding: 0rem 1rem;
+        .title{
+            font-size: 1.5rem;
+            text-align: center;
+            width: 100%;
+        }
     }
 
     .body {
@@ -27,22 +34,124 @@
         .left {
             @include column();
             align-items: center;
-            width: 200px;
-            border:1px solid whitesmoke;
+            width: 250px;
+            border-right:1px solid whitesmoke;
+            justify-content: flex-start;
+            .total{
+                @include column();
+                border-bottom: 1px solid whitesmoke;
+                width: 100%;
+                text-align: center;
+                align-items: center;
+                padding: 1rem;
+
+                &:last-child{
+                    border-top: 1px solid whitesmoke;
+                    border-bottom: none;
+                }
+                .text{
+                    font-size: 1.2rem;
+                }
+                .value{
+                    font-size: 2.5rem;
+                    font-weight: bold;
+                    padding: 0px;
+                }
+            
+            }
         }
         .center {
             @include column();
             flex:1;
+            
         }
         .right {
             @include column();
             align-items: center;
-            width: 100px;
+            width: 250px;
+            border-left:1px solid whitesmoke;
         }
     }
 
     .footer {
         @include row();
         height: 50px;
+        border-top:1px solid whitesmoke;
     }
+}
+
+
+
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {  
+ .wrapper{
+     .header{
+
+     }
+     .body{
+        .left{
+            display: none;
+        }
+        .center{
+
+        }
+        .right{
+            display: none;
+        }
+     }
+     .footer{
+
+     }
+ }
+}
+ 
+/* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+@media (max-width: 768px) {  
+    .wrapper{
+        .header{
+   
+        }
+        .body{
+           .left{
+               display: none;
+           }
+           .center{
+   
+           }
+           .right{
+               display: none;
+           }
+        }
+        .footer{
+   
+        }
+    }
+}
+ 
+/* Large devices (desktops, 992px and up) */
+@media (max-width: 992px) { 
+    .wrapper{
+        .header{
+            
+        }
+        .body{
+           .left{
+               display: none;
+           }
+           .center{
+   
+           }
+           .right{
+               display: none;
+           }
+        }
+        .footer{
+   
+        }
+    }
+}
+ 
+/* Extra large devices (large desktops, 1200px and up) */
+@media (max-width: 1200px) {  
+    
 }

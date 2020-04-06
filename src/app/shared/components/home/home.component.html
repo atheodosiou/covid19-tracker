@@ -1,17 +1,48 @@
 <div class="wrapper">
-    <div class="header">Header</div>
-    <div class="body">
-        <div class="left">Left</div>
-        <div class="center">Center</div>
-        <div class="right">Right</div>
+  <div class="header">
+      <div class="title">Coronavirus COVID-19 Global Cases</div>
+  </div>
+  <div class="body">
+    <div class="left">
+        <!-- Left -->
+        <div class="total">
+            <div class="text">Confirmed</div>
+            <div class="value" style="color: red; font-size: 3rem;">{{confirmed | number}}</div>
+        </div>
+        <div class="total">
+            <div class="text">Deaths</div>
+            <div class="value" style="color: greenyellow;">{{deaths| number}}</div>
+        </div>
+        <div class="total">
+            <div class="text">Recovered</div>
+            <div class="value" style="color: lightseagreen;">{{recovered| number}}</div>
+        </div>
+        <div class="total">
+            <div class="text">Active</div>
+            <div class="value" style="color: lightblue;">{{active| number}}</div>
+        </div>
+        <div class="total">
+            <div class="text">Countries/Regions</div>
+            <div class="value" style="color: whitesmoke;">{{data?.length| number}}</div>
+        </div>
+        <div class="auto" style="background-color: yellow; height: 100%;"></div>
+        <div class="total">
+            <div class="text" style="font-size: 1rem;">Last Updated At</div>
+            <div class="value" style="color: whitesmoke; font-size: 1rem;">{{data[0].updatedAt}}</div>
+        </div>
     </div>
-    <div class="footer">Footer</div>
+    <div class="center">
+      <div class="container-fluid bg-light h-100 p-0 m-0">
+        <div class="row h-100 p-0 m-0">
+          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 h-100 p-0">
+            <map [data]="data"></map>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="right">Right</div>
+  </div>
+  <div class="footer">Footer</div>
 </div>
 
-<!-- <div class="container-fluid bg-light h-100 p-0 m-0">
-   <div class="row h-100 p-0 m-0">
-       <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 h-100 p-0">
-           <map [data]="data"></map>
-       </div>
-   </div>
-</div> -->
+<!--  -->

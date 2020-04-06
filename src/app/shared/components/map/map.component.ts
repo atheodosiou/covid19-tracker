@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
 import * as L from "leaflet";
+import 'leaflet.heat';
 import { CovidService } from "../../services/covid.service";
-import { GeoJson } from "../../models/geoJSON";
 
 @Component({
   selector: "map",
@@ -12,8 +12,7 @@ export class MapComponent implements OnInit {
   @Input() set data(value: any[]) {
     if (value) {
       this.mapData = value;
-      console.log(this.mapData);
-      // console.log(this.toGeoJson(this.mapData));
+      console.log(this.mapData);      
     }
   }
 
@@ -47,25 +46,40 @@ export class MapComponent implements OnInit {
         maxZoom: 18,
         attribution:
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          
       }
     );
+
+    // const totalConfirmed=this.mapData.map(x=>x+=x.stats.confirmed);
+    // console.log('TOTAL CASES:',totalConfirmed);
+
+    const heatData = this.mapData.map(point=>{
+    return [point.coordinates.latitude,point.coordinates.longitude,0.5];
+    });
+    console.log('HEAT DATA',heatData);
+    const heatLayer=L.heatLayer(heatData as L.HeatLatLngTuple[],{blur:15,gradient:{0.4: 'blue', 0.65: 'lime', 1: 'red'}});
     const layers = {
       Light: OpenStreetMap_DE,
       Dark: Stadia_AlidadeSmoothDark,
+      Heatmap:heatLayer
     };
     return new Promise<any>((fullfiled, rejected) => {
       this.map = L.map("map", {
         center: this.center,
         zoom: 3,
-        layers: [Stadia_AlidadeSmoothDark, OpenStreetMap_DE],
+        layers: [Stadia_AlidadeSmoothDark, OpenStreetMap_DE,heatLayer],
+
       });
       L.control.layers(layers).addTo(this.map);
-
-      this.mapData.forEach((item) => {
-        L.marker([item.coordinates.latitude, item.coordinates.longitude], {
-          icon: this.getIcon(item.stats.confirmed),
-        }).addTo(this.map);
-      });
+      L.control.scale().addTo(this.map);
+      
+      //Markers
+      // this.mapData.forEach((item) => {
+      //   L.marker([item.coordinates.latitude, item.coordinates.longitude], {
+      //     icon: this.getIcon(item.stats.confirmed),
+      //   }).addTo(this.map);
+      // });
+      
       fullfiled();
     });
   }
