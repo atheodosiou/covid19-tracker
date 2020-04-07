@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: http://koronoios.anastasios.theodosiou.me/sitemap.xml
