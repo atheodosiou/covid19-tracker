@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { HomeComponent } from "./home.component";
 import { RouterModule } from "@angular/router";
 import { MapModule } from '../map/map.module';
+import { CountryListModule } from '../country-list/country-list.module';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { MapModule } from '../map/map.module';
         component: HomeComponent,
       },
     ]),
-    MapModule
+    MapModule,
+    CountryListModule
   ],
   exports: [HomeComponent],
   declarations: [HomeComponent],
