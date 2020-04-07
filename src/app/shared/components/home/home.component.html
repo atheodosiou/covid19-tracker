@@ -45,13 +45,13 @@
       <div class="container-fluid bg-light h-100 p-0 m-0">
         <div class="row h-100 p-0 m-0">
           <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 h-100 p-0">
-            <map [data]="data"></map>
+            <map [data]="data" [selectedCountry]="selectedCountry"></map>
           </div>
         </div>
       </div>
     </div>
     <div class="right">
-      <country-list *ngIf="countries" [data]="countries"></country-list>
+      <country-list *ngIf="countries" [data]="countries" (onSelect)="onCountrySelect($event)"></country-list>
     </div>
   </div>
   <div class="footer">

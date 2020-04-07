@@ -1,8 +1,18 @@
 import { Component, OnInit, Input } from "@angular/core";
-import {map,heatLayer,control,icon,Map,LatLng, tileLayer, marker, layerGroup, Icon} from "leaflet";
-import "leaflet.heat/dist/leaflet-heat.js"
+import {
+  map,
+  heatLayer,
+  control,
+  icon,
+  Map,
+  LatLng,
+  tileLayer,
+  marker,
+  layerGroup,
+  Icon,
+} from "leaflet";
+import "leaflet.heat/dist/leaflet-heat.js";
 import { CovidService } from "../../services/covid.service";
-
 
 @Component({
   selector: "map",
@@ -16,10 +26,15 @@ export class MapComponent implements OnInit {
     }
   }
 
+  @Input() set selectedCountry(value: any) {
+    if (value) {
+      this.map.flyTo(value, 12, { animate: true });
+    }
+  }
   constructor(private covidService: CovidService) {}
   map: Map;
   private mapData: any[];
-  center: LatLng = new LatLng(20.77449,-34.8500967);
+  center: LatLng = new LatLng(20.77449, -34.8500967);
   Stadia_AlidadeSmoothDark = tileLayer(
     "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png",
     {
@@ -66,37 +81,47 @@ export class MapComponent implements OnInit {
             icon: this.getIcon(item.stats.confirmed),
           }
         ).bindPopup(
-          `<strong>Country/Region: </strong>${item?.country}</br></br><strong>Confirmed: </strong>${item.stats.confirmed}<br><strong>Deaths: </strong>${item.stats.deaths}<br><strong>Recovered: </strong>${item.stats.recovered}</div>`
-        ,{autoClose:false, className:'popup'});
+          `<strong>Country/Region: </strong>${item?.country}</br></br><strong>Confirmed: </strong>${item.stats.confirmed}<br><strong>Deaths: </strong>${item.stats.deaths}<br><strong>Recovered: </strong>${item.stats.recovered}</div>`,
+          { autoClose: false, className: "popup" }
+        );
         markers.push(mapMarker);
       });
       const markerLayerGroup = layerGroup([...markers]);
 
       //Total confirmed
-      let totalConfirmed=0;
-      this.mapData.forEach(x=>{totalConfirmed+=x.stats.confirmed});
+      let totalConfirmed = 0;
+      this.mapData.forEach((x) => {
+        totalConfirmed += x.stats.confirmed;
+      });
       //Heatmap
-      const heatData:[number,number,number][] = this.mapData.map((point) => {
+      const heatData: [number, number, number][] = this.mapData.map((point) => {
         return [
-            point.coordinates.latitude,
-            point.coordinates.longitude,
-            (point.stats.confirmed*100)/totalConfirmed
+          point.coordinates.latitude,
+          point.coordinates.longitude,
+          (point.stats.confirmed * 100) / totalConfirmed,
         ];
       });
-      const filterdHeatData:[number,number,number][] = heatData.filter(x=>{
-        if(x[0]!==null && x[1]!==null) return true;
-        return false
-      });
-      const heatmapLayer = heatLayer(filterdHeatData as [number,number,number][],{radius:15, blur:25,gradient:{0.015: 'blue', 0.035: 'lime', 0.065: 'red'}})
+      const filterdHeatData: [number, number, number][] = heatData.filter(
+        (x) => {
+          if (x[0] !== null && x[1] !== null) return true;
+          return false;
+        }
+      );
+      const heatmapLayer = heatLayer(
+        filterdHeatData as [number, number, number][],
+        {
+          radius: 15,
+          blur: 25,
+          gradient: { 0.015: "blue", 0.035: "lime", 0.065: "red" },
+        }
+      );
       //Map
       this.map = map("map", {
         center: this.center,
         zoom: 2,
         minZoom: 1,
-        layers: [this.Stadia_AlidadeSmoothDark, markerLayerGroup,heatmapLayer],
+        layers: [this.Stadia_AlidadeSmoothDark, markerLayerGroup, heatmapLayer],
       });
-
-      
 
       const baseMaps = {
         Light: this.OpenStreetMap_DE,
@@ -104,7 +129,7 @@ export class MapComponent implements OnInit {
       };
       const overlayMaps = {
         Countries: markerLayerGroup,
-        Heatmap:heatmapLayer
+        Heatmap: heatmapLayer,
       };
 
       // Add Controls

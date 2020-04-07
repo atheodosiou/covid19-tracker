@@ -8,7 +8,7 @@
       <div class="country-name">{{ item?.country }}</div>
     </div>
     <ul>
-      <li *ngFor="let region of item?.details">
+      <li *ngFor="let region of item?.details" (click)="selectChild(region)">
         <div class="region">{{ region?.province }}</div>
         <div class="details">
           <div style="color: lightblue;"><span>Confirmed: </span>{{ region?.stats.confirmed }}</div>
