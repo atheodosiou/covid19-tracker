@@ -11,7 +11,7 @@ import {
   layerGroup,
   Icon,
 } from "leaflet";
-import "leaflet.heat/dist/leaflet-heat.js";
+import "leaflet.heat";
 
 @Component({
   selector: "map",
@@ -34,12 +34,14 @@ export class MapComponent implements OnInit {
   map: Map;
   private mapData: any[];
   center: LatLng = new LatLng(20.77449, -34.8500967);
-  Stadia_AlidadeSmoothDark = tileLayer(
-    "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png",
+  
+  CartoDB_DarkMatter = tileLayer(
+    "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
     {
-      maxZoom: 20,
       attribution:
-        '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: "abcd",
+      maxZoom: 19,
     }
   );
 
@@ -119,12 +121,12 @@ export class MapComponent implements OnInit {
         center: this.center,
         zoom: 2,
         minZoom: 1,
-        layers: [this.Stadia_AlidadeSmoothDark, markerLayerGroup, heatmapLayer],
+        layers: [this.CartoDB_DarkMatter, markerLayerGroup, heatmapLayer],
       });
 
       const baseMaps = {
         Light: this.OpenStreetMap_DE,
-        Grayscale: this.Stadia_AlidadeSmoothDark,
+        Grayscale: this.CartoDB_DarkMatter,
       };
       const overlayMaps = {
         Countries: markerLayerGroup,

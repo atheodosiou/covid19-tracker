@@ -14,7 +14,6 @@ export class CountryListComponent {
     this.countries.forEach((item) => {
       this.getFlag(item.country);
     });
-    console.log(countryList.default.countries);
   }
 
   @Output() onSelect: EventEmitter<any> = new EventEmitter<any>();
@@ -40,7 +39,7 @@ export class CountryListComponent {
   }
 
   getFlag(name: string) {
-    let flags: any[] = countryList.default.countries;
+    let flags: any[] = (countryList as any).countries;
     const found = flags.find((x) => {
       return (
         x.name.toLowerCase().includes(name.toLowerCase()) ||
