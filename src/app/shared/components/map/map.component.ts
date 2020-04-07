@@ -68,8 +68,8 @@ export class MapComponent implements OnInit {
             icon: this.getIcon(item.stats.confirmed),
           }
         ).bindPopup(
-          `<strong>Confirmed: </strong>${item.stats.confirmed}<br><strong>Deaths: </strong>${item.stats.deaths}<br><strong>Recovered: </strong>${item.stats.recovered}`
-        );
+          `<strong>Country/Region: </strong>${item?.country}</br></br><strong>Confirmed: </strong>${item.stats.confirmed}<br><strong>Deaths: </strong>${item.stats.deaths}<br><strong>Recovered: </strong>${item.stats.recovered}</div>`
+        ,{autoClose:false, className:'popup'});
         markers.push(mapMarker);
       });
       const markerLayerGroup = layerGroup([...markers]);
