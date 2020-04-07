@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from "@angular/core";
-import * as L from "leaflet";
-import 'leaflet.heat';
+import {map,heatLayer,control,icon,Map,LatLng, tileLayer, marker, layerGroup, Icon} from "leaflet";
+import "leaflet.heat/dist/leaflet-heat.js"
 import { CovidService } from "../../services/covid.service";
+
 
 @Component({
   selector: "map",
@@ -12,15 +13,15 @@ export class MapComponent implements OnInit {
   @Input() set data(value: any[]) {
     if (value) {
       this.mapData = value;
-      console.log(this.mapData);      
+      console.log(this.mapData);
     }
   }
 
   constructor(private covidService: CovidService) {}
-  map: L.Map;
+  map: Map;
   private mapData: any[];
-  center: L.LatLng = new L.LatLng(37.2532002, 5.8725402);
-  Stadia_AlidadeSmoothDark = L.tileLayer(
+  center: LatLng = new LatLng(20.77449,-34.8500967);
+  Stadia_AlidadeSmoothDark = tileLayer(
     "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png",
     {
       maxZoom: 20,
@@ -29,72 +30,92 @@ export class MapComponent implements OnInit {
     }
   );
 
-  OpenStreetMap_DE = L.tileLayer(
+  OpenStreetMap_DE = tileLayer(
     "https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png",
     {
       maxZoom: 18,
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        
     }
   );
 
   ngOnInit() {
-    setTimeout(() => {
-      this.initMap().then(() => {
-        //Use lowdash to groupby country!!!
-        console.log(this.mapData);
-        // lat and lng could be null!!
-      });
-    }, 300);
+    this.initMap().then(() => {
+      console.log(this.mapData);
+      // lat and lng could be null!!
+      this.getCurrentPosition()
+        .then((pos) => {
+          if (pos) {
+            this.map.flyTo(
+              { lat: pos.coords.latitude, lng: pos.coords.longitude },
+              12,
+              { animate: true }
+            );
+          }
+        })
+        .catch((error) => {});
+    });
   }
 
   private initMap(): Promise<any> {
-    
-
-    // const totalConfirmed=this.mapData.map(x=>x+=x.stats.confirmed);
-    // console.log('TOTAL CASES:',totalConfirmed);
-
-    const heatData = this.mapData.map(point=>{
-    return [point.coordinates.latitude,point.coordinates.longitude,0.5];
-    });
-    console.log('HEAT DATA',heatData);
-    // const heatLayer=L.heatLayer(heatData as L.HeatLatLngTuple[],{blur:15,gradient:{0.4: 'blue', 0.65: 'lime', 1: 'red'}});
-    const layers = {
-      Light: this.OpenStreetMap_DE,
-      Dark: this.Stadia_AlidadeSmoothDark,
-      // Heatmap:heatLayer
-    };
-
-
     return new Promise<any>((fullfiled, rejected) => {
       // Markers
-      const markers=[];
+      const markers = [];
       this.mapData.forEach((item) => {
-        const marker = L.marker([item.coordinates.latitude, item.coordinates.longitude], {
-          icon: this.getIcon(item.stats.confirmed),
-        }).bindPopup(`<strong>Confirmed: </strong>${item.stats.confirmed}<br><strong>Deaths: </strong>${item.stats.deaths}<br><strong>Recovered: </strong>${item.stats.recovered}`)
-        markers.push(marker);
+        const mapMarker = marker(
+          [item.coordinates.latitude, item.coordinates.longitude],
+          {
+            icon: this.getIcon(item.stats.confirmed),
+          }
+        ).bindPopup(
+          `<strong>Confirmed: </strong>${item.stats.confirmed}<br><strong>Deaths: </strong>${item.stats.deaths}<br><strong>Recovered: </strong>${item.stats.recovered}`
+        );
+        markers.push(mapMarker);
       });
-      const markerLayerGroup = L.layerGroup([...markers]);
+      const markerLayerGroup = layerGroup([...markers]);
 
-      this.map = L.map("map", {
-        center: this.center,
-        zoom: 3,
-        layers: [this.Stadia_AlidadeSmoothDark, markerLayerGroup]
+      //Total confirmed
+      let totalConfirmed=0;
+      this.mapData.forEach(x=>{totalConfirmed+=x.stats.confirmed});
+      console.log('TOTAL CONFIRMED',totalConfirmed)
+      //Heatmap
+      const heatData:[number,number,number][] = this.mapData.map((point) => {
+        return [
+            point.coordinates.latitude,
+            point.coordinates.longitude,
+            (point.stats.confirmed*100)/totalConfirmed
+        ];
       });
+      const filterdHeatData:[number,number,number][] = heatData.filter(x=>{
+        if(x[0]!==null && x[1]!==null) return true;
+        return false
+      });
+      console.log("HEATMAP DATA", heatData.length);
+      console.log("FILTERED HEATMAP DATA", filterdHeatData);
+
+      const heatmapLayer = heatLayer(filterdHeatData as [number,number,number][],{radius:15, blur:25,gradient:{0.015: 'blue', 0.035: 'lime', 0.065: 'red'}})
+      //Map
+      this.map = map("map", {
+        center: this.center,
+        zoom: 2,
+        minZoom: 1,
+        layers: [this.Stadia_AlidadeSmoothDark, markerLayerGroup,heatmapLayer],
+      });
+
+      
 
       const baseMaps = {
-        Light:this.OpenStreetMap_DE,
-        Grayscale:this.Stadia_AlidadeSmoothDark
+        Light: this.OpenStreetMap_DE,
+        Grayscale: this.Stadia_AlidadeSmoothDark,
       };
-      const overlayMaps={
-        Countries: markerLayerGroup
+      const overlayMaps = {
+        Countries: markerLayerGroup,
+        Heatmap:heatmapLayer
       };
 
       // Add Controls
-      L.control.layers(baseMaps,overlayMaps).addTo(this.map);
-      L.control.scale().addTo(this.map);
+      control.layers(baseMaps, overlayMaps).addTo(this.map);
+      control.scale().addTo(this.map);
 
       fullfiled();
     });
@@ -136,39 +157,39 @@ export class MapComponent implements OnInit {
     });
   }
 
-  private getIcon(value: number): L.Icon {
+  private getIcon(value: number): Icon {
     if (value <= 9) {
-      return L.icon({
+      return icon({
         iconUrl: "../../../../assets/icons/virus.png",
         iconSize: [8, 8],
         iconAnchor: [0, 4],
       });
     } else if (value >= 10 && value <= 99) {
-      return L.icon({
+      return icon({
         iconUrl: "../../../../assets/icons/virus.png",
         iconSize: [10, 10],
         iconAnchor: [0, 5],
       });
     } else if (value >= 10 && value <= 99) {
-      return L.icon({
+      return icon({
         iconUrl: "../../../../assets/icons/virus.png",
         iconSize: [12, 12],
         iconAnchor: [0, 6],
       });
     } else if (value >= 100 && value <= 999) {
-      return L.icon({
+      return icon({
         iconUrl: "../../../../assets/icons/virus.png",
         iconSize: [14, 14],
         iconAnchor: [0, 7],
       });
     } else if (value >= 1000 && value <= 9999) {
-      return L.icon({
+      return icon({
         iconUrl: "../../../../assets/icons/virus.png",
         iconSize: [16, 16],
         iconAnchor: [0, 8],
       });
     } else if (value >= 10000) {
-      return L.icon({
+      return icon({
         iconUrl: "../../../../assets/icons/virus.png",
         iconSize: [18, 18],
         iconAnchor: [0, 9],
