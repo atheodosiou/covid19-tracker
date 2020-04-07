@@ -1,3 +1,21 @@
-<div class="country-list-wrapper">
-  Country List
-</div>
+<ul>
+  <li *ngFor="let item of countries">
+    <div class="country">
+      <img
+        src="https://www.countryflags.io/it/flat/64.png"
+        alt="country flag"
+      />
+      <div class="country-name">{{ item?.country }}</div>
+    </div>
+    <ul>
+      <li *ngFor="let region of item?.details">
+        <div class="region">{{ region?.province }}</div>
+        <div class="details">
+          <div style="color: lightblue;"><span>Confirmed: </span>{{ region?.stats.confirmed }}</div>
+          <div style="color: lightcoral;"><span>Deaths: </span>{{ region?.stats.deaths }}</div>
+          <div style="color: lightseagreen;"><span>Recovered: </span>{{ region?.stats.recovered }}</div>
+        </div>
+      </li>
+    </ul>
+  </li>
+</ul>

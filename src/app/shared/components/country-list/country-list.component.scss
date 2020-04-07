@@ -1,5 +1,60 @@
-.country-list-wrapper{
+@import "../../../../assets/styles/variables";
+ul {
+  list-style: none;
+  padding: 0;
+
+  li {
     display: flex;
-    background-color: lightcoral;
-    width: 250px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+   
+    .country {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      background-color: whitesmoke;
+      color: $dark;
+      width: 100%;
+      border-bottom: 1px solid $dark;
+      img {
+        margin: 0rem 0.5rem;
+        height: 30px;
+      }
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    width: 100%;
+      li {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding-left: 1rem;
+        width: 100%;
+        border-bottom: 1px solid whitesmoke;
+
+        &:hover{
+            background-color: transparentize($color: whitesmoke, $amount: .5);
+            cursor: pointer;
+        }
+
+        .region{
+
+        }
+        .details{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            font-size: .7rem;
+            width: 100%;
+        }
+      }
+    }
+  }
 }

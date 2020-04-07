@@ -1,0 +1,10 @@
+a{
+    img{
+        position: absolute;
+        right: 0;
+        height: 110px;
+        &:hover{
+            cursor: pointer;
+        }
+    }
+}

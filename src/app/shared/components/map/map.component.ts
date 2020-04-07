@@ -13,7 +13,6 @@ export class MapComponent implements OnInit {
   @Input() set data(value: any[]) {
     if (value) {
       this.mapData = value;
-      console.log(this.mapData);
     }
   }
 
@@ -41,7 +40,6 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     this.initMap().then(() => {
-      console.log(this.mapData);
       // lat and lng could be null!!
       this.getCurrentPosition()
         .then((pos) => {
@@ -77,7 +75,6 @@ export class MapComponent implements OnInit {
       //Total confirmed
       let totalConfirmed=0;
       this.mapData.forEach(x=>{totalConfirmed+=x.stats.confirmed});
-      console.log('TOTAL CONFIRMED',totalConfirmed)
       //Heatmap
       const heatData:[number,number,number][] = this.mapData.map((point) => {
         return [
@@ -90,9 +87,6 @@ export class MapComponent implements OnInit {
         if(x[0]!==null && x[1]!==null) return true;
         return false
       });
-      console.log("HEATMAP DATA", heatData.length);
-      console.log("FILTERED HEATMAP DATA", filterdHeatData);
-
       const heatmapLayer = heatLayer(filterdHeatData as [number,number,number][],{radius:15, blur:25,gradient:{0.015: 'blue', 0.035: 'lime', 0.065: 'red'}})
       //Map
       this.map = map("map", {
