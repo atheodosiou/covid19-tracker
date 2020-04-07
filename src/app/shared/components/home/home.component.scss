@@ -82,7 +82,7 @@
     .right {
       @include column();
       align-items: center;
-      width: 300px;
+      width: 250px;
       border-left: 1px solid whitesmoke;
       overflow-y: auto;
       @include scrollbar();

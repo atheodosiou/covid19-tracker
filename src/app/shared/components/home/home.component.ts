@@ -15,6 +15,8 @@ export class HomeComponent implements OnInit {
   active:number = this.confirmed -this.deaths - this.recovered;
   totalCountries:number=0;
   data:any[];
+  countries:any;
+
   ngOnInit() {
     this.covidService.getData().subscribe(res=>{
       this.data=res;
@@ -28,6 +30,7 @@ export class HomeComponent implements OnInit {
     },error=>{
       console.log(error);
     });
+    this.covidService.getGroupedData().subscribe(res=>{this.countries=res},error=>console.error(error));
   }
 
 }
