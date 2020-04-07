@@ -33,6 +33,15 @@
           {{ data?.length | number }}
         </div>
       </div>
+      <div class="support">
+        <div class="text">Support</div>
+        <a href="https://github.com/atheodosiou/covid19-tracker" target="_blank" class="github-btn">
+          <i class="fas fa-star"></i> Star
+        </a>
+        <a href="https://github.com/atheodosiou/covid19-tracker" target="_blank" class="github-btn">
+          <i class="fas fa-code-branch"></i> Fork
+        </a>
+      </div>
       <div class="auto" style="background-color: yellow; height: 100%;"></div>
       <div class="total">
         <div class="text" style="font-size: 1rem;">Last Updated At</div>
@@ -51,7 +60,11 @@
       </div>
     </div>
     <div class="right">
-      <country-list *ngIf="countries" [data]="countries" (onSelect)="onCountrySelect($event)"></country-list>
+      <country-list
+        *ngIf="countries"
+        [data]="countries"
+        (onSelect)="onCountrySelect($event)"
+      ></country-list>
     </div>
   </div>
   <div class="footer">
@@ -93,9 +106,15 @@
       </div>
     </div>
     <div class="right">
-      <a href="http://anastasios.theodosiou.me/" target="_blank"><i class="fas fa-globe"></i></a>
-      <a href="https://github.com/atheodosiou/" target="_blank"><i class="fab fa-github"></i></a>
-      <a href="mailto:anastasios.theodosiou@gmail.com"><i class="fas fa-envelope-open"></i></a>
+      <a href="http://anastasios.theodosiou.me/" target="_blank"
+        ><i class="fas fa-globe"></i
+      ></a>
+      <a href="https://github.com/atheodosiou/" target="_blank"
+        ><i class="fab fa-github"></i
+      ></a>
+      <a href="mailto:anastasios.theodosiou@gmail.com"
+        ><i class="fas fa-envelope-open"></i
+      ></a>
     </div>
   </div>
 </div>

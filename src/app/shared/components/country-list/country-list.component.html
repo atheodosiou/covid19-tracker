@@ -2,7 +2,7 @@
   <li *ngFor="let item of countries">
     <div class="country">
       <img
-        src="https://www.countryflags.io/it/flat/64.png"
+        [src]="getFlag(item.country)"
         alt="country flag"
       />
       <div class="country-name">{{ item?.country }}</div>

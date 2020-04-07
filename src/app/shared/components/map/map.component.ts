@@ -12,7 +12,6 @@ import {
   Icon,
 } from "leaflet";
 import "leaflet.heat/dist/leaflet-heat.js";
-import { CovidService } from "../../services/covid.service";
 
 @Component({
   selector: "map",
@@ -28,10 +27,10 @@ export class MapComponent implements OnInit {
 
   @Input() set selectedCountry(value: any) {
     if (value) {
-      this.map.flyTo(value, 12, { animate: true });
+      this.map.flyTo(value, 12, { animate: false });
     }
   }
-  constructor(private covidService: CovidService) {}
+  constructor() {}
   map: Map;
   private mapData: any[];
   center: LatLng = new LatLng(20.77449, -34.8500967);
