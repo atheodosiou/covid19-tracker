@@ -2,7 +2,7 @@
   <div class="header">
     <div class="title">Coronavirus COVID-19 Global Cases</div>
   </div>
-  <div class="body">
+  <div *ngIf="data" class="body">
     <div class="left">
       <!-- Left -->
       <div class="total">
@@ -37,7 +37,7 @@
       <div class="total">
         <div class="text" style="font-size: 1rem;">Last Updated At</div>
         <div class="value" style="color: whitesmoke; font-size: 1rem;">
-          {{ data[0].updatedAt }}
+          {{ data[0]?.updatedAt }}
         </div>
       </div>
     </div>
