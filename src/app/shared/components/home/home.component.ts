@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { CovidService } from "../../services/covid.service";
 import { convertObjectToArray } from '../country-list/country-list.component';
+import { GoogleAnalyticsService } from '../../services/googleAnalytics.service';
 
 @Component({
   selector: "app-home",
@@ -8,7 +9,7 @@ import { convertObjectToArray } from '../country-list/country-list.component';
   styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit {
-  constructor(private covidService: CovidService) {}
+  constructor(private covidService: CovidService, private googleAnalyticsService:GoogleAnalyticsService) {}
   confirmed: number = 0;
   deaths: number = 0;
   recovered: number = 0;
@@ -48,5 +49,19 @@ export class HomeComponent implements OnInit {
 
   onCountrySelect(latlng: any) {
     this.selectedCountry = latlng;
+  }
+
+  onCountrySelectMobile(region){
+    let latlng={lat:region.coordinates.latitude,lng:region.coordinates.longitude};
+    this.selectedCountry=latlng;
+    
+    //Google analytics
+    this.googleAnalyticsService.eventEmitter(
+      "Country Clicked",
+      "Country-List",
+      "click",
+      region.province ? region.province : region.country,
+      1
+    );
   }
 }

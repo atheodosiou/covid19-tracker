@@ -148,7 +148,7 @@
        <li *ngFor="let country of countryList">
          <div class="title">{{country.country}}</div>
          <ul *ngIf="country.details">
-           <li *ngFor="let region of country.details">
+           <li *ngFor="let region of country.details" (click)="onCountrySelectMobile(region)">
              <div class="region">{{region.province?region.province:region.country}}</div>
              <div class="stats">
               <div class="confirmed" ><span>Confirmed:</span> {{region.stats.confirmed}}</div>

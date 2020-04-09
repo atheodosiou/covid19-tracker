@@ -1,13 +1,17 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { CovidService } from "../../services/covid.service";
 import * as countryList from "../../../../assets/data/countries.json";
+import { GoogleAnalyticsService } from "../../services/googleAnalytics.service";
 @Component({
   selector: "country-list",
   templateUrl: "./country-list.component.html",
   styleUrls: ["./country-list.component.scss"],
 })
 export class CountryListComponent {
-  constructor(private covidService: CovidService) {}
+  constructor(
+    private covidService: CovidService,
+    private googleAnalyticsService: GoogleAnalyticsService
+  ) {}
   countries: any[];
   @Input() set data(value: any) {
     this.countries = convertObjectToArray(value);
@@ -17,7 +21,7 @@ export class CountryListComponent {
   }
 
   @Output() onSelect: EventEmitter<any> = new EventEmitter<any>();
-  
+
   selectChild(data: any) {
     if (
       data &&
@@ -29,6 +33,13 @@ export class CountryListComponent {
         lat: data.coordinates.latitude,
         lng: data.coordinates.longitude,
       });
+      this.googleAnalyticsService.eventEmitter(
+        "Country Clicked",
+        "Country-List",
+        "click",
+        data.province ? data.province : data.country,
+        1
+      );
     }
   }
 
@@ -40,7 +51,7 @@ export class CountryListComponent {
         name.toLowerCase().includes(x.name.toLowerCase())
       );
     });
-    if (found && found.code && found.code!=='CS') {
+    if (found && found.code && found.code !== "CS") {
       return `https://www.countryflags.io/${found.code.toLowerCase()}/flat/64.png`;
     } else {
       return "assets/icons/flag.png";
