@@ -1,27 +1,10 @@
-# Covid19
+# Coronavirus - Covid19 - Tracker
+![covid19-tracker](https://user-images.githubusercontent.com/20326000/78722313-e4f76b80-7931-11ea-97f1-5b1344fb88b8.png)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.0.
+### Site: [www.koronoios.anastasios.theodosiou.me](http://www.koronoios.anastasios.theodosiou.me)
+This website and its contents herein, including all data, mapping, and analysis (“Website”), copyright 2020 Anastasios Theodosiou all rights reserved, is provided to the public strictly for public health, educational, and academic research purposes. You are welcome to link to the Website, however. The Website relies upon publicly available data from multiple sources that do not always agree. Anastasios Theodosiou hereby disclaims any and all representations and warranties with respect to the Website, including accuracy, fitness for use, reliability, and non-infringement. Reliance on the Website for medical guidance or use of the Website in commerce is strictly prohibited.
 
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### Data provided by:    
+[NovelCOVID/API](https://github.com/novelcovid/api) public api based on deferent sources. Courenty (04/06/2020) using the two bellow. 
+[https://www.worldometers.info/coronavirus/](https://www.worldometers.info/coronavirus/) and
+[https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series)
