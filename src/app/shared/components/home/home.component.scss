@@ -11,18 +11,18 @@
 }
 
 @mixin scrollbar {
-    &::-webkit-scrollbar {
-        width: 1px
-      }
+  &::-webkit-scrollbar {
+    width: 1px;
+  }
 
-      &::-webkit-scrollbar-track {
-        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-      }
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
 
-      &::-webkit-scrollbar-thumb {
-        background-color: darkgrey;
-        outline: 1px solid slategrey;
-      }
+  &::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+  }
 }
 .wrapper {
   @include column();
@@ -39,6 +39,10 @@
       text-align: center;
       width: 100%;
     }
+  }
+
+  .header-sm {
+    display: none;
   }
 
   .body {
@@ -66,7 +70,7 @@
           border-bottom: none;
         }
         .text {
-          font-size: 1.2rem;;
+          font-size: 1.2rem;
         }
         .value {
           font-size: 2.5rem;
@@ -74,28 +78,28 @@
           padding: 0px;
         }
       }
-      .support{
+      .support {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
         border-bottom: 1px solid whitesmoke;
         width: 100%;
-        .text{
-          margin-bottom: .5rem;
+        .text {
+          margin-bottom: 0.5rem;
           font-size: 1.2rem;
         }
-        a{
+        a {
           text-decoration: none;
           background-color: whitesmoke;
           border: 1px solid gray;
-          color:$dark;
+          color: $dark;
           width: 70px;
           text-align: center;
-          margin-bottom: .5rem;
-          padding:0.125rem 0rem;
+          margin-bottom: 0.5rem;
+          padding: 0.125rem 0rem;
           border-radius: 3px;
-          &:hover{
+          &:hover {
             background-color: white;
           }
         }
@@ -153,11 +157,10 @@
         padding: 0.5rem 1rem;
         font-size: 0.8rem;
         @include scrollbar();
-        a{
-            color: lightseagreen;
-            text-decoration: none;
+        a {
+          color: lightseagreen;
+          text-decoration: none;
         }
-        
       }
     }
     .right {
@@ -167,27 +170,124 @@
       display: flex;
       align-items: center;
       justify-content: space-evenly;
-      
-      a{
-          text-decoration: none;
-          color: whitesmoke;
-          font-size: 1.2rem;
 
-          &:hover{
-              color: lightseagreen;
-              cursor: pointer;
-          }
+      a {
+        text-decoration: none;
+        color: whitesmoke;
+        font-size: 1.2rem;
+
+        &:hover {
+          color: lightseagreen;
+          cursor: pointer;
+        }
       }
     }
   }
+
+  .footer-sm {
+    display: none;
+  }
 }
 
-/* Small devices (landscape phones, 576px and up) */
-@media (max-width: 576px) {
+@mixin mobileStats() {
+  display: inherit;
+  flex-direction: column;
+  flex: 1;
+  font-size: 0.8rem;
+}
+
+@mixin mobile {
   .wrapper {
     .header {
+      display: none;
+    }
+    .header-sm {
+      display: flex;
+      height: 70px;
+      flex-direction: column;
+
+      .title {
+        font-size: 1.2rem;
+        text-align: center;
+        height: 30px;
+        align-items: center;
+        font-weight: bold;
+      }
+      .stats {
+        display: inherit;
+        flex-direction: row;
+        height: 40px;
+        border-top: 1px solid whitesmoke;
+        border-bottom: 1px solid whitesmoke;
+        .confirmed {
+          @include mobileStats();
+          .subtitle {
+            text-align: center;
+            width: 100%;
+          }
+          .total {
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+            color: whitesmoke;
+          }
+        }
+        .deaths {
+          @include mobileStats();
+          .subtitle {
+            text-align: center;
+            width: 100%;
+          }
+          .total {
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+            color: red;
+          }
+        }
+        .recovered {
+          @include mobileStats();
+          .subtitle {
+            text-align: center;
+            width: 100%;
+          }
+          .total {
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+            color: greenyellow;
+          }
+        }
+        .active {
+          @include mobileStats();
+          .subtitle {
+            text-align: center;
+            width: 100%;
+          }
+          .total {
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+            color: lightseagreen;
+          }
+        }
+        .regions {
+          @include mobileStats();
+          .subtitle {
+            text-align: center;
+            width: 100%;
+          }
+          .total {
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+            color: whitesmoke;
+          }
+        }
+      }
     }
     .body {
+      height: calc(100vh - 200px);
       .left {
         display: none;
       }
@@ -198,48 +298,62 @@
       }
     }
     .footer {
+      display: none;
+    }
+    .footer-sm {
+      display: flex;
+      height: 130px;
+      flex-direction: column;
+      .list {
+        display: inherit;
+        height: 100px;
+        border-top: 1px solid whitesmoke;
+      }
+      .attribution {
+        display: inherit;
+        align-items: center;
+        height: 30px;
+        border-top: 1px solid whitesmoke;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0rem 0.25rem;
+        .created-by {
+          font-size: 0.8rem;
+          a {
+            text-decoration: none;
+            color: lightseagreen;
+            font-weight: bold;
+          }
+        }
+
+        .follow {
+          display: inherit;
+          justify-content: space-between;
+          width: 70px;
+          font-size: 0.8rem;
+          a {
+            text-decoration: none;
+            color: lightseagreen;
+            font-weight: bold;
+          }
+        }
+      }
     }
   }
+}
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+  @include mobile();
 }
 
 /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
 @media (max-width: 768px) {
-  .wrapper {
-    .header {
-    }
-    .body {
-      .left {
-        display: none;
-      }
-      .center {
-      }
-      .right {
-        display: none;
-      }
-    }
-    .footer {
-    }
-  }
+  @include mobile();
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (max-width: 992px) {
-  .wrapper {
-    .header {
-    }
-    .body {
-      .left {
-        display: none;
-      }
-      .center {
-      }
-      .right {
-        display: none;
-      }
-    }
-    .footer {
-    }
-  }
+  @include mobile();
 }
 
 /* Extra large devices (large desktops, 1200px and up) */

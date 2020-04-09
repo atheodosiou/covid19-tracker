@@ -2,6 +2,31 @@
   <div class="header">
     <div class="title">Coronavirus COVID-19 Global Cases</div>
   </div>
+  <div class="header-sm">
+    <div class="title">Coronavirus COVID-19 Global Cases</div>
+    <div *ngIf="data" class="stats">
+      <div class="confirmed">
+        <div class="subtitle">Confirmed</div>
+        <div class="total">{{ confirmed | number }}</div>
+      </div>
+      <div class="deaths">
+        <div class="subtitle">Deaths</div>
+        <div class="total"> {{ deaths | number }}</div>
+      </div>
+      <div class="recovered">
+        <div class="subtitle">Recovered</div>
+        <div class="total">{{ recovered | number }}</div>
+      </div>
+      <div class="active">
+        <div class="subtitle">Active</div>
+        <div class="total">{{ active | number }}</div>
+      </div>
+      <div class="regions">
+        <div class="subtitle">Regions</div>
+        <div class="total">{{ data?.length | number }}</div>
+      </div>
+    </div>
+  </div>
   <div *ngIf="data" class="body">
     <div class="left">
       <!-- Left -->
@@ -115,6 +140,26 @@
       <a href="mailto:anastasios.theodosiou@gmail.com"
         ><i class="fas fa-envelope-open"></i
       ></a>
+    </div>
+  </div>
+  <div class="footer-sm">
+    <div class="list">List</div>
+    <div class="attribution">
+      <div class="created-by">
+        Created by:
+        <a href="https://anastasios.theodosiou.me" target="_blank">Anastasios Theodosiou</a>
+      </div>
+      <div class="follow">
+        <a href="http://anastasios.theodosiou.me/" target="_blank"
+        ><i class="fas fa-globe"></i
+      ></a>
+      <a href="https://github.com/atheodosiou/" target="_blank"
+        ><i class="fab fa-github"></i
+      ></a>
+      <a href="mailto:anastasios.theodosiou@gmail.com"
+        ><i class="fas fa-envelope-open"></i
+      ></a>
+      </div>
     </div>
   </div>
 </div>

@@ -8,3 +8,27 @@ a{
         }
     }
 }
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+    a{
+        display: none;
+    }
+  }
+  
+  /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+  @media (max-width: 768px) {
+    a{
+        display: none;
+    }
+  }
+  
+  /* Large devices (desktops, 992px and up) */
+  @media (max-width: 992px) {
+    a{
+        display: none;
+    }
+  }
+  
+  /* Extra large devices (large desktops, 1200px and up) */
+  @media (max-width: 1200px) {
+  }
