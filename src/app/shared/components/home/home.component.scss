@@ -308,6 +308,65 @@
         display: inherit;
         height: 100px;
         border-top: 1px solid whitesmoke;
+
+        ul{
+          width: 100%;
+          height: 100%;
+          list-style: none;
+          overflow-y: auto;
+          padding: 0px;
+          li{
+            display: flex;
+            flex-direction: column;
+            padding: 0px;
+            .title{
+              background-color: whitesmoke;
+              color:$dark;
+              padding: 0rem 0.25rem;
+            }
+            ul{
+              width: 100%;
+              height: 100%;
+              list-style: none;
+              padding: 0px;
+
+              li{
+                padding: 0px;
+                display: flex;
+                .region{
+                  font-size: 0.5rem;
+                  padding: 0rem .25rem;
+                  font-size: 0.9rem;
+                }
+                .stats{
+                  display: inherit;
+                  flex-direction: row;
+                  border-bottom: 1px solid whitesmoke;
+                  padding: 0rem .25rem;
+                  font-size: 0.8rem;
+                  .confirmed{
+                    flex: 1;
+                    span{
+                      color: whitesmoke;
+                    }
+                  }
+                  .deaths{
+                    flex: 1;
+                    span{
+                      color: red;
+                    }
+                  }
+                  .recovered{
+                    flex: 1;
+                    span{
+                      color: greenyellow;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
       .attribution {
         display: inherit;

@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { CovidService } from "../../services/covid.service";
+import { convertObjectToArray } from '../country-list/country-list.component';
 
 @Component({
   selector: "app-home",
@@ -15,6 +16,7 @@ export class HomeComponent implements OnInit {
   totalCountries: number = 0;
   data: any[];
   countries: any;
+  countryList:any[];
   selectedCountry: any;
 
   ngOnInit() {
@@ -36,6 +38,9 @@ export class HomeComponent implements OnInit {
     this.covidService.getGroupedData().subscribe(
       (res) => {
         this.countries = res;
+        
+        this.countryList = convertObjectToArray(res);
+        console.log(this.countryList);
       },
       (error) => console.error(error)
     );

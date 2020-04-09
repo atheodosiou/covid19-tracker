@@ -10,20 +10,14 @@ export class CountryListComponent {
   constructor(private covidService: CovidService) {}
   countries: any[];
   @Input() set data(value: any) {
-    this.countries = this.convertObjectToArray(value);
+    this.countries = convertObjectToArray(value);
     this.countries.forEach((item) => {
       this.getFlag(item.country);
     });
   }
 
   @Output() onSelect: EventEmitter<any> = new EventEmitter<any>();
-  private convertObjectToArray(obj: any): any[] {
-    const data = [];
-    Object.keys(obj).forEach((key) => {
-      data.push({ country: key, details: obj[key] });
-    });
-    return data;
-  }
+  
   selectChild(data: any) {
     if (
       data &&
@@ -54,4 +48,12 @@ export class CountryListComponent {
     //
     // console.log('Actual:',name,'Found:',found)
   }
+}
+
+export function convertObjectToArray(obj: any): any[] {
+  const data = [];
+  Object.keys(obj).forEach((key) => {
+    data.push({ country: key, details: obj[key] });
+  });
+  return data;
 }
