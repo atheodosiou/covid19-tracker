@@ -1,9 +1,23 @@
 <div class="wrapper">
   <div class="header">
     <div class="title">Coronavirus COVID-19 Global Cases</div>
+    <div class="links">
+      <ul>
+        <li routerLink="/home" routerLinkActive="active">Home</li>
+        <li routerLink="/stats" routerLinkActive="active">Analytics</li>
+      </ul>
+    </div>
   </div>
   <div class="header-sm">
-    <div class="title">Coronavirus COVID-19 Global Cases</div>
+    <div class="nav-bar">
+      <div class="title">COVID Global Cases</div>
+      <div class="links">
+        <ul>
+          <li routerLink="/home" routerLinkActive="active">Home</li>
+          <li routerLink="/stats" routerLinkActive="active">Analytics</li>
+        </ul>
+      </div>
+    </div>
     <div *ngIf="data" class="stats">
       <div class="confirmed">
         <div class="subtitle">Confirmed</div>
