@@ -4,11 +4,12 @@ import { Observable, of } from "rxjs";
 import { map, catchError, tap } from "rxjs/operators";
 import * as _ from "lodash";
 import { Country } from "../models/country";
-import { CountryHistoricalData } from "../models/historical";
+import { CountryHistoricalData, Timeline } from "../models/historical";
 
 enum Endpoints {
   JHUCSSE = "jhucsse",
   HISTORICAL = "historical",
+  HISTORICAL_ALL="historical/all?lastdays=all",
   COUNTRIES = "jhucsse/counties",
 }
 @Injectable({
@@ -47,6 +48,12 @@ export class CovidService {
   ): Observable<CountryHistoricalData> {
     return this.http.get<CountryHistoricalData>(
       `${this.baseUrl}${Endpoints.HISTORICAL}/${countryCode}?lastdays=all`
+    );
+  }
+
+  getGlobalHistoricalData():Observable<Timeline>{
+    return this.http.get<Timeline>(
+      `${this.baseUrl}${Endpoints.HISTORICAL_ALL}`
     );
   }
 }
