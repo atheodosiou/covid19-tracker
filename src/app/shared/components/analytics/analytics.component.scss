@@ -1,0 +1,323 @@
+@import "../../../../assets/styles/variables";
+
+@mixin row {
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin scrollbar {
+  &::-webkit-scrollbar {
+    width: 1px;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+  }
+}
+.wrapper {
+  @include column();
+  background-color: $dark;
+  color: white;
+  .header {
+    @include row();
+    height: 50px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid whitesmoke;
+    padding: 0rem 5rem;
+    .title {
+      font-size: 1.5rem;
+      text-align: center;
+    }
+    .links {
+      ul {
+        list-style: none;
+        li {
+          float: left;
+          &:hover {
+            color: lightseagreen;
+            cursor: pointer;
+          }
+          margin-right: 1rem;
+          &:last-child {
+            margin-left: 0rem;
+          }
+        }
+      }
+    }
+  }
+
+  .header-sm {
+    display: none;
+  }
+
+  .body {
+    height: calc(100vh - 100px) !important;
+  }
+
+  .footer {
+    @include row();
+    height: 50px;
+    border-top: 1px solid whitesmoke;
+
+    .left {
+      display: flex;
+      align-items: center;
+      width: 250px;
+      word-wrap: break-word;
+      overflow-x: auto;
+      @include scrollbar();
+      .created-by {
+        width: 100%;
+        text-align: center;
+        color: whitesmoke;
+        a {
+          text-decoration: none;
+          color: whitesmoke;
+          font-weight: bold;
+          font-style: italic;
+
+          &:hover {
+            color: lightseagreen;
+          }
+        }
+      }
+    }
+    .center {
+      // background-color: red;
+      display: flex;
+      flex: 1;
+      .info {
+        overflow-y: auto;
+        word-wrap: break-word;
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+        @include scrollbar();
+        a {
+          color: lightseagreen;
+          text-decoration: none;
+        }
+      }
+    }
+    .right {
+      width: 300px;
+      overflow-x: auto;
+      @include scrollbar();
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+
+      a {
+        text-decoration: none;
+        color: whitesmoke;
+        font-size: 1.2rem;
+
+        &:hover {
+          color: lightseagreen;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .footer-sm {
+    display: none;
+  }
+}
+
+.active {
+  color: lightseagreen;
+}
+
+@mixin mobileStats() {
+  display: inherit;
+  flex-direction: column;
+  flex: 1;
+  font-size: 0.8rem;
+}
+
+@mixin mobile {
+  .wrapper {
+    .header {
+      display: none;
+    }
+    .header-sm {
+      display: flex;
+      height: 30px;
+      flex-direction: column;
+    border-bottom: 1px solid whitesmoke;
+      .nav-bar {
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0rem .5rem;
+        .title {
+          font-size: 1.2rem;
+          text-align: center;
+          align-items: center;
+          font-weight: bold;
+        }
+        .links {
+          ul {
+            list-style: none;
+            li {
+              float: left;
+              &:hover {
+                color: lightseagreen;
+                cursor: pointer;
+              }
+              margin-right: .5rem;
+              &:last-child {
+                margin-right: 0rem;
+              }
+            }
+          }
+        }
+      }
+
+      .stats {
+        display: inherit;
+        flex-direction: row;
+        height: 40px;
+        border-top: 1px solid whitesmoke;
+        border-bottom: 1px solid whitesmoke;
+        .confirmed {
+          @include mobileStats();
+          .subtitle {
+            text-align: center;
+            width: 100%;
+          }
+          .total {
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+            color: whitesmoke;
+          }
+        }
+        .deaths {
+          @include mobileStats();
+          .subtitle {
+            text-align: center;
+            width: 100%;
+          }
+          .total {
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+            color: red;
+          }
+        }
+        .recovered {
+          @include mobileStats();
+          .subtitle {
+            text-align: center;
+            width: 100%;
+          }
+          .total {
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+            color: greenyellow;
+          }
+        }
+        .active {
+          @include mobileStats();
+          .subtitle {
+            text-align: center;
+            width: 100%;
+          }
+          .total {
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+            color: lightseagreen;
+          }
+        }
+        .regions {
+          @include mobileStats();
+          .subtitle {
+            text-align: center;
+            width: 100%;
+          }
+          .total {
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+            color: whitesmoke;
+          }
+        }
+      }
+    }
+    .body {
+      height: calc(100vh - 60px);
+      
+    }
+    .footer {
+      display: none;
+    }
+    .footer-sm {
+      display: flex;
+      height: 30px;
+      flex-direction: column;
+      
+      .attribution {
+        display: inherit;
+        align-items: center;
+        height: 30px;
+        border-top: 1px solid whitesmoke;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0rem 0.25rem;
+        .created-by {
+          font-size: 0.8rem;
+          a {
+            text-decoration: none;
+            color: lightseagreen;
+            font-weight: bold;
+          }
+        }
+
+        .follow {
+          display: inherit;
+          justify-content: space-between;
+          width: 70px;
+          font-size: 0.8rem;
+          a {
+            text-decoration: none;
+            color: lightseagreen;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+  @include mobile();
+}
+
+/* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+@media (max-width: 768px) {
+  @include mobile();
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (max-width: 992px) {
+  @include mobile();
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (max-width: 1200px) {
+}
