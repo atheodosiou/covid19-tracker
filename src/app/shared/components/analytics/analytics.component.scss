@@ -50,7 +50,7 @@
           }
           margin-right: 1rem;
           &:last-child {
-            margin-left: 0rem;
+            margin-right: 0rem;
           }
         }
       }
@@ -63,6 +63,8 @@
 
   .body {
     height: calc(100vh - 100px);
+    padding: .5rem;
+    overflow-y: auto;
   }
 
   .footer {

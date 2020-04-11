@@ -1,0 +1,27 @@
+.chart-wrapper {
+  display: block;
+  width: 100%;
+  .header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0rem 4.5rem;
+    .title {
+      font-size: 1.2rem;
+    }
+    .actions {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .form-check {
+        margin-right: 1rem;
+        &:last-child {
+          margin-right: 0rem;
+        }
+      }
+    }
+  }
+  canvas {
+  }
+}

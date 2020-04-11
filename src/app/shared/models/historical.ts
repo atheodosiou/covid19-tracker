@@ -5,7 +5,7 @@ export interface CountryHistoricalData {
 }
 
 export interface Timeline {
-  cases: { string: number }[];
-  deaths: { string: number }[];
-  recovered: { string: number }[];
+  cases: any;
+  deaths: any;
+  recovered: any;
 }
