@@ -6,9 +6,10 @@ import {
   convertTimelineToDataset,
   createChartLabels,
 } from "../global-historical/global-historical.component";
-import { ChartDataSets, ChartOptions } from "chart.js";
+import { ChartDataSets } from "chart.js";
 import { Color, Label } from "ng2-charts";
 import * as pluginAnnotations from "chartjs-plugin-annotation";
+import { CountryHistoricalChartOptions } from './chart.options';
 @Component({
   selector: "country-historical",
   templateUrl: "./country-historical.component.html",
@@ -25,46 +26,7 @@ export class CountryHistoricalComponent implements OnInit {
   recoveredData: any[] = [];
   lineChartData: ChartDataSets[];
   lineChartLabels: Label[];
-  public lineChartOptions: ChartOptions & { annotation: any } = {
-    responsive: true,
-    scales: {
-      // We use this empty structure as a placeholder for dynamic theming.
-      xAxes: [{}],
-      yAxes: [
-        {
-          id: "y-axis-0",
-          position: "left",
-        },
-        {
-          id: "y-axis-1",
-          position: "right",
-          // gridLines: {
-          //   color: rgba(255,0,0,0.3),
-          // },
-          // ticks: {
-          //   fontColor: 'blue',
-          // }
-        },
-      ],
-    },
-    annotation: {
-      annotations: [
-        {
-          type: "line",
-          mode: "vertical",
-          scaleID: "x-axis-0",
-          value: "March",
-          borderColor: "orange",
-          borderWidth: 2,
-          label: {
-            enabled: true,
-            fontColor: "orange",
-            content: "LineAnno",
-          },
-        },
-      ],
-    },
-  };
+  public lineChartOptions=CountryHistoricalChartOptions;
   public lineChartColors: Color[] = [
     {
       // Cases

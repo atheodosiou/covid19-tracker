@@ -4,6 +4,7 @@ import { Timeline } from "src/app/shared/models/historical";
 import { ChartDataSets, ChartOptions } from "chart.js";
 import { Color, Label } from "ng2-charts";
 import * as pluginAnnotations from "chartjs-plugin-annotation";
+import { GlobalHistoricalChartOptions } from './chart.options';
 
 @Component({
   selector: "global-historical",
@@ -23,49 +24,10 @@ export class GlobalHistoricalComponent implements OnInit {
 
   lineChartData: ChartDataSets[];
   lineChartLabels: Label[];
-  public lineChartOptions: ChartOptions & { annotation: any } = {
-    responsive: true,
-    scales: {
-      // We use this empty structure as a placeholder for dynamic theming.
-      xAxes: [{}],
-      yAxes: [
-        {
-          id: "y-axis-0",
-          position: "left",
-        },
-        {
-          id: "y-axis-1",
-          position: "right",
-          // gridLines: {
-          //   color: rgba(255,0,0,0.3),
-          // },
-          // ticks: {
-          //   fontColor: 'blue',
-          // }
-        },
-      ],
-    },
-    annotation: {
-      annotations: [
-        {
-          type: "line",
-          mode: "vertical",
-          scaleID: "x-axis-0",
-          value: "March",
-          borderColor: "orange",
-          borderWidth: 2,
-          label: {
-            enabled: true,
-            fontColor: "orange",
-            content: "LineAnno",
-          },
-        },
-      ],
-    },
-  };
+  public lineChartOptions=GlobalHistoricalChartOptions;
   public lineChartColors: Color[] = [
     {
-      // Cases
+      // Recovered
       backgroundColor: "rgba(173, 216, 230, 0.7)",
       borderColor: "rgba(173, 216, 230,1)",
       pointBackgroundColor: "rgba(173, 216, 230,1)",
@@ -139,7 +101,7 @@ export function convertTimelineToDataset(timeline: Timeline, casesData,deathsDat
   });
 
   return [
-    { data: casesData, label: "Cases" ,order:3},
+    { data: casesData, label: "Recovered" ,order:3},
     { data: deathsData, label: "Deaths" ,order:1},
     { data: recoveredData, label: "Recovered",order:2 },
   ];
