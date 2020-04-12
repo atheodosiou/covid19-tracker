@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AnalyticsComponent } from './analytics.component';
 import { RouterModule } from '@angular/router';
 import { GlobalHistoricalModule } from '../charts/global-historical/global-historical.module';
+import { CountryHistoricalModule } from '../charts/country-historical/country-historical.module';
 
 @NgModule({
   imports: [
@@ -11,7 +12,8 @@ import { GlobalHistoricalModule } from '../charts/global-historical/global-histo
       path:'',
       component:AnalyticsComponent
     }]),
-    GlobalHistoricalModule
+    GlobalHistoricalModule,
+    CountryHistoricalModule
   ],
   exports:[AnalyticsComponent],
   declarations: [AnalyticsComponent]
