@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { CovidService } from "src/app/shared/services/covid.service";
 import { Timeline } from "src/app/shared/models/historical";
 import { ChartDataSets, ChartOptions } from "chart.js";
-import { Color, BaseChartDirective, Label } from "ng2-charts";
+import { Color, Label } from "ng2-charts";
 import * as pluginAnnotations from "chartjs-plugin-annotation";
 
 @Component({
@@ -99,8 +99,8 @@ export class GlobalHistoricalComponent implements OnInit {
   ngOnInit() {
     this.covidService.getGlobalHistoricalData().subscribe(
       (data) => {
-        this.lineChartData = this.convertTimelineToDataset(data);
-        this.lineChartLabels = this.createChartLabels(data);
+        this.lineChartData = convertTimelineToDataset(data,this.casesData,this.deathsData,this.recoveredData);
+        this.lineChartLabels = createChartLabels(data);
       },
       (error) => {
         console.error(error);
@@ -108,37 +108,39 @@ export class GlobalHistoricalComponent implements OnInit {
     );
   }
 
-  private convertTimelineToDataset(timeline: Timeline): ChartDataSets[] {
-    Object.keys(timeline).forEach((attr1) => {
-      if (attr1 === "cases") {
-        Object.keys(timeline[attr1]).forEach((key) => {
-          this.casesData.push(timeline[attr1][key]);
-        });
-      }
-      if (attr1 === "deaths") {
-        Object.keys(timeline[attr1]).forEach((key) => {
-          this.deathsData.push(timeline[attr1][key]);
-        });
-      }
-      if (attr1 === "recovered") {
-        Object.keys(timeline[attr1]).forEach((key) => {
-          this.recoveredData.push(timeline[attr1][key]);
-        });
-      }
-    });
+  
+}
 
-    return [
-      { data: this.casesData, label: "Cases" ,order:3},
-      { data: this.deathsData, label: "Deaths" ,order:1},
-      { data: this.recoveredData, label: "Recovered",order:2 },
-    ];
-  }
+export function createChartLabels(timeline: Timeline): Label[] {
+  const label: Label[] = [];
+  Object.keys(timeline["cases"]).forEach((key) => {
+    label.push(key);
+  });
+  return label;
+}
 
-  private createChartLabels(timeline: Timeline): Label[] {
-    const label: Label[] = [];
-    Object.keys(timeline["cases"]).forEach((key) => {
-      label.push(key);
-    });
-    return label;
-  }
+export function convertTimelineToDataset(timeline: Timeline, casesData,deathsData,recoveredData): ChartDataSets[] {
+  Object.keys(timeline).forEach((attr1) => {
+    if (attr1 === "cases") {
+      Object.keys(timeline[attr1]).forEach((key) => {
+        casesData.push(timeline[attr1][key]);
+      });
+    }
+    if (attr1 === "deaths") {
+      Object.keys(timeline[attr1]).forEach((key) => {
+       deathsData.push(timeline[attr1][key]);
+      });
+    }
+    if (attr1 === "recovered") {
+      Object.keys(timeline[attr1]).forEach((key) => {
+        recoveredData.push(timeline[attr1][key]);
+      });
+    }
+  });
+
+  return [
+    { data: casesData, label: "Cases" ,order:3},
+    { data: deathsData, label: "Deaths" ,order:1},
+    { data: recoveredData, label: "Recovered",order:2 },
+  ];
 }

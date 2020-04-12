@@ -1,7 +1,39 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-      Country Historical Data
+      <div class="header">
+        <div class="title">Historical data by country</div>
+        <div class="actions">
+          <input
+            placeholder="Search country"
+            [(ngModel)]="selectedCountry"
+            [typeahead]="countries"
+            typeaheadOptionField="name"
+            [isAnimated]="true"
+            typeaheadWaitMs="500"
+            [typeaheadOptionsInScrollableView]="5"
+            (typeaheadOnSelect)="onCountrySelect($event)"
+            class="form-control"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0">
+      <div *ngIf="lineChartData" class="chart-wrapper">
+        <canvas
+          baseChart
+          [datasets]="lineChartData"
+          [labels]="lineChartLabels"
+          [options]="lineChartOptions"
+          [colors]="lineChartColors"
+          [legend]="lineChartLegend"
+          [chartType]="lineChartType"
+          [plugins]="lineChartPlugins"
+        >
+        </canvas>
+      </div>
     </div>
   </div>
 </div>
