@@ -24,6 +24,7 @@ export class CountryHistoricalComponent implements OnInit {
   recoveredData: any[] = [];
   lineChartData: ChartDataSets[];
   lineChartLabels: Label[];
+  selectedCountry:string;
   public lineChartOptions=CountryHistoricalChartOptions;
   public lineChartColors: Color[] = [
     {

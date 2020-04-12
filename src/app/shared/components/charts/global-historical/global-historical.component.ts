@@ -101,7 +101,7 @@ export function convertTimelineToDataset(timeline: Timeline, casesData,deathsDat
   });
 
   return [
-    { data: casesData, label: "Recovered" ,order:3},
+    { data: casesData, label: "Confirmed" ,order:3},
     { data: deathsData, label: "Deaths" ,order:1},
     { data: recoveredData, label: "Recovered",order:2 },
   ];
