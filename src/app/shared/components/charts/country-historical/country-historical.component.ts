@@ -18,9 +18,7 @@ import { CountryHistoricalChartOptions } from './chart.options';
 export class CountryHistoricalComponent implements OnInit {
   constructor(private covidService: CovidService) {}
   countries: Country[];
-  sortConfig: TypeaheadOrder = {
-    direction: "desc",
-  };
+  noData:boolean=false;
   casesData: any[] = [];
   deathsData: any[] = [];
   recoveredData: any[] = [];
@@ -91,8 +89,12 @@ export class CountryHistoricalComponent implements OnInit {
             this.recoveredData
           );
           console.log(this.lineChartData);
+          this.noData=false;
         },
-        (error) => console.error(error)
-      );
+        (error) => {
+          console.log(error);
+          this.lineChartData=[];
+          this.noData=true;
+        });
   }
 }

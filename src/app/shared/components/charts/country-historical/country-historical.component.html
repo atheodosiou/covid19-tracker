@@ -21,7 +21,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0">
-      <div *ngIf="lineChartData" class="chart-wrapper">
+      <div *ngIf="lineChartData?.length > 0 && !noData" class="chart-wrapper">
         <canvas
           baseChart
           [datasets]="lineChartData"
@@ -33,6 +33,12 @@
           [plugins]="lineChartPlugins"
         >
         </canvas>
+      </div>
+      <div *ngIf="lineChartData?.length == 0 && noData" class="mt-3 p-3">
+        <div class="alert alert-danger" role="alert">
+          There is no available data for
+          <span class="text-bold">{{ selectedCountry }}</span>
+        </div>
       </div>
     </div>
   </div>
