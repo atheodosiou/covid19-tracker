@@ -101,7 +101,6 @@ export class GlobalHistoricalComponent implements OnInit {
       (data) => {
         this.lineChartData = this.convertTimelineToDataset(data);
         this.lineChartLabels = this.createChartLabels(data);
-        console.log(this.lineChartLabels);
       },
       (error) => {
         console.error(error);
@@ -111,7 +110,6 @@ export class GlobalHistoricalComponent implements OnInit {
 
   private convertTimelineToDataset(timeline: Timeline): ChartDataSets[] {
     Object.keys(timeline).forEach((attr1) => {
-      console.log(attr1, timeline[attr1]);
       if (attr1 === "cases") {
         Object.keys(timeline[attr1]).forEach((key) => {
           this.casesData.push(timeline[attr1][key]);

@@ -39,9 +39,7 @@ export class HomeComponent implements OnInit {
     this.covidService.getGroupedData().subscribe(
       (res) => {
         this.countries = res;
-        
         this.countryList = convertObjectToArray(res);
-        console.log(this.countryList);
       },
       (error) => console.error(error)
     );

@@ -56,8 +56,6 @@ export class CountryListComponent {
     } else {
       return "assets/icons/flag.png";
     }
-    //
-    // console.log('Actual:',name,'Found:',found)
   }
 }
 
