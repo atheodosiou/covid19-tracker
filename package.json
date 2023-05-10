@@ -27,7 +27,7 @@
     "chart.js": "^2.9.3",
     "chartjs-plugin-annotation": "^0.5.7",
     "heatmapjs": "^2.0.2",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "leaflet": "^1.6.0",
     "leaflet-heatmap": "^1.0.0",
     "leaflet.heat": "^0.2.0",
